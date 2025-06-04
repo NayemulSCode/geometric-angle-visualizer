@@ -171,7 +171,7 @@ const App: React.FC = () => {
             max="12"
             value={n}
             onChange={(e) => setN(parseInt(e.target.value))}
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[hsl(var(--btn-hue),70%,50%)]"
+            className="w-full h-2 bg-slate-300 rounded-lg appearance-none cursor-pointer accent-[hsl(var(--btn-hue),70%,50%)]"
             style={{ "--btn-hue": buttonHue } as React.CSSProperties}
           />
           <div className="flex justify-between text-xs text-gray-500 mt-1">
@@ -226,10 +226,10 @@ const App: React.FC = () => {
       </div>
 
       {/* Side by Side Views */}
-      <div className="flex flex-col lg:flex-row gap-8 justify-center w-full mb-8">
+      <div className="flex flex-col lg:flex-row gap-8 justify-center w-full max-w-6xl mx-auto mb-8">
         {/* 2D View Card */}
         <div
-          className="bg-white/90 backdrop-blur-sm rounded-xl shadow-xl p-6 flex flex-col items-center w-full lg:w-auto transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-1"
+          className="bg-white/90 backdrop-blur-sm rounded-xl shadow-xl p-6 flex flex-col items-center w-full lg:w-1/2 transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-1"
           style={{
             boxShadow: `0 10px 25px -5px hsla(${bgHue}, 70%, 40%, 0.3)`,
           }}
@@ -253,7 +253,7 @@ const App: React.FC = () => {
 
         {/* 3D View Card */}
         <div
-          className="bg-white/90 backdrop-blur-sm rounded-xl shadow-xl p-6 flex flex-col items-center w-full lg:w-auto transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-1"
+          className="bg-white/90 backdrop-blur-sm rounded-xl shadow-xl p-6 flex flex-col items-center w-full lg:w-1/2 transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-1"
           style={{
             boxShadow: `0 10px 25px -5px hsla(${bgHue}, 70%, 40%, 0.3)`,
           }}
