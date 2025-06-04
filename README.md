@@ -1,54 +1,70 @@
-# React + TypeScript + Vite
+# Interactive Geometry Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+The Interactive Geometry Explorer is a web-based application designed to help children learn about geometry in a fun and engaging way. Users can visualize and interact with various 2D and 3D shapes, explore their properties, and understand geometric concepts more intuitively.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+*   **2D Shape Visualization:** Display and interact with common 2D shapes like triangles, squares, circles, etc.
+*   **3D Shape Visualization:** Explore 3D shapes such as cubes, spheres, pyramids, and cylinders.
+*   **Angle Display:** Show and manipulate angles within shapes.
+*   **Shape Manipulation:** Modify shape dimensions, rotate shapes, and view them from different perspectives.
+*   **Export Options:** (Future Feature) Allow users to export their creations or specific views.
+*   **Formula Display:** Show relevant geometric formulas for selected shapes.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Educational Goals
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+This tool aims to:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+*   Make learning geometry more interactive and less abstract.
+*   Help users visualize complex geometric shapes and their properties.
+*   Provide a hands-on approach to understanding geometric transformations.
+*   Encourage exploration and discovery in the realm of geometry.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Tech Stack
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+*   **Frontend:** React, TypeScript
+*   **Bundler:** Vite
+*   **3D Graphics:** Three.js
+*   **Styling:** Tailwind CSS
+
+## Getting Started / Running Locally
+
+To run the Interactive Geometry Explorer locally, follow these steps:
+
+1.  **Clone the repository:**
+    ```bash
+    git clone <repository-url>
+    cd <repository-directory>
+    ```
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+    or
+    ```bash
+    yarn install
+    ```
+3.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
+    or
+    ```bash
+    yarn dev
+    ```
+    This will start the development server, and you can access the application in your browser, usually at `http://localhost:5173`.
+
+## How to Use
+
+*   **Shape Selection:** Use the sidebar or controls to select different 2D or 3D shapes.
+*   **Interaction:**
+    *   Click and drag to rotate 3D shapes.
+    *   Use sliders or input fields to change dimensions.
+    *   Toggle options to display angles, formulas, etc.
+*   **Exploration:** Experiment with different shapes and settings to understand their geometric properties.
+
+---
+
+This project is a work in progress. We welcome contributions and feedback!

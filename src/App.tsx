@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import GeometryShapes from "./components/GeometryShapes";
 import Geometry3DViewer from "./components/Geometry3DView";
+import HelpModal from "./components/HelpModal"; // Import HelpModal
 
 const App: React.FC = () => {
   const [n, setN] = useState<number>(5);
@@ -11,7 +12,8 @@ const App: React.FC = () => {
   const [bgHue, setBgHue] = useState<number>(0);
   const [animate, setAnimate] = useState<boolean>(true);
   const [isStar, setIsStar] = useState<boolean>(false);
-  const [points, setPoints] = useState<{ x: number; y: number }[]>([]);
+  // const [points, setPoints] = useState<{ x: number; y: number }[]>([]); // This state was unused
+  const [isHelpModalOpen, setIsHelpModalOpen] = useState<boolean>(false); // State for HelpModal
 
   // Background animation (for color change)
   useEffect(() => {
@@ -37,9 +39,9 @@ const App: React.FC = () => {
     setIsStar(false);
   };
 
-  const handlePointsChange = (newPoints: { x: number; y: number }[]) => {
-    setPoints(newPoints);
-  };
+  // const handlePointsChange = (newPoints: { x: number; y: number }[]) => { // This handler was for the unused 'points' state
+  //   setPoints(newPoints);
+  // };
 
   // Calculate complementary color for buttons based on background
   const buttonHue = (bgHue + 180) % 360;
@@ -50,7 +52,7 @@ const App: React.FC = () => {
       style={{ backgroundColor: `hsl(${bgHue}, 70%, 95%)` }}
     >
       {/* Header */}
-      <header className="text-center mb-6">
+      <header className="text-center mb-6 relative">
         <h1
           className="text-3xl md:text-4xl font-bold mb-2"
           style={{ color: `hsl(${bgHue}, 70%, 25%)` }}
@@ -63,6 +65,16 @@ const App: React.FC = () => {
         >
           Interactive 2D and 3D geometry visualization
         </p>
+        <button
+          onClick={() => setIsHelpModalOpen(true)}
+          className="absolute top-0 right-0 mt-2 mr-2 md:mt-3 md:mr-3 p-2 rounded-full hover:bg-gray-200/50 focus:outline-none focus:ring-2 focus:ring-gray-400"
+          title="Help"
+          style={{ color: `hsl(${bgHue}, 70%, 35%)` }}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+          </svg>
+        </button>
       </header>
 
       {/* Controls Section */}
@@ -234,7 +246,8 @@ const App: React.FC = () => {
             showInterior={showInterior}
             showExterior={showExterior}
             isStar={isStar}
-            onPointsChange={handlePointsChange}
+            onPointsChange={() => {}} // Pass a no-op function as onPointsChange is expected by GeometryShapes but points state is removed from App
+            // Alternatively, GeometryShapes could be refactored to not require onPointsChange if points are self-contained
           />
         </div>
 
@@ -264,28 +277,58 @@ const App: React.FC = () => {
           {isStar ? "Star" : "Regular Polygon"} Properties
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-gray-50 rounded-lg p-4 shadow-inner">
-            <p className="text-gray-700">
-              <span className="font-medium">Shape:</span>{" "}
-              {isStar ? `${n}-pointed Star` : `${n}-sided Polygon`}
-            </p>
-            <p className="text-gray-700">
-              <span className="font-medium">Interior Angle:</span>{" "}
-              {isStar ? "Variable" : `${(((n - 2) * 180) / n).toFixed(1)}°`}
-            </p>
-            <p className="text-gray-700">
-              <span className="font-medium">Exterior Angle:</span>{" "}
-              {`${(360 / n).toFixed(1)}°`}
-            </p>
+          <div className="bg-gray-50 rounded-lg p-4 shadow-inner space-y-3">
+            <div>
+              <p className="text-gray-700">
+                <span className="font-medium">Shape Type:</span>{" "}
+                {isStar ? `${n}-pointed Star` : `${n}-sided Polygon`}
+              </p>
+            </div>
+            <div>
+              <p className="text-gray-700">
+                <span className="font-medium">Interior Angle:</span>{" "}
+                {isStar
+                  ? "Variable"
+                  : `((n-2) * 180) / n = ${(((n - 2) * 180) / n).toFixed(1)}°`}
+              </p>
+              {!isStar && (
+                <p className="text-xs text-gray-600 italic ml-2">
+                  This is the angle at each corner, inside the shape!
+                </p>
+              )}
+            </div>
+            <div>
+              <p className="text-gray-700">
+                <span className="font-medium">Exterior Angle:</span>{" "}
+                360 / n = {`${(360 / n).toFixed(1)}°`}
+              </p>
+              <p className="text-xs text-gray-600 italic ml-2">
+                If you extend one side, this is the angle it makes with the next side on the outside!
+              </p>
+            </div>
           </div>
-          <div className="bg-gray-50 rounded-lg p-4 shadow-inner">
-            <p className="text-gray-700">
-              <span className="font-medium">Sum of Interior Angles:</span>{" "}
-              {isStar ? "Variable" : `${(n - 2) * 180}°`}
-            </p>
-            <p className="text-gray-700">
-              <span className="font-medium">Sum of Exterior Angles:</span> 360°
-            </p>
+          <div className="bg-gray-50 rounded-lg p-4 shadow-inner space-y-3">
+            <div>
+              <p className="text-gray-700">
+                <span className="font-medium">Sum of Interior Angles:</span>{" "}
+                {isStar
+                  ? "Variable"
+                  : `(n-2) * 180 = ${(n - 2) * 180}°`}
+              </p>
+              {!isStar && (
+                <p className="text-xs text-gray-600 italic ml-2">
+                  All the inside angles added together make this big number!
+                </p>
+              )}
+            </div>
+            <div>
+              <p className="text-gray-700">
+                <span className="font-medium">Sum of Exterior Angles:</span> 360°
+              </p>
+              <p className="text-xs text-gray-600 italic ml-2">
+                All the outside angles always add up to 360° - like a full circle!
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -299,6 +342,7 @@ const App: React.FC = () => {
           Interactive Geometry Explorer © {new Date().getFullYear()}
         </p>
       </footer>
+      <HelpModal isOpen={isHelpModalOpen} onClose={() => setIsHelpModalOpen(false)} />
     </div>
   );
 };
